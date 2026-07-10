@@ -1,0 +1,83 @@
+{
+  "name": "vscode-mdpreview-vue-renderer",
+  "displayName": "Vue block-code renderer for VScode default Markdown Previewer",
+  "description": "An extension for rendering vue code block in markdown default previewer of VScode",
+  "version": "0.0.1",
+  "icon": "./src/assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/vscode-mdpreview-vue-renderer"
+  },
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "markdown.markdownItPlugins": true,
+    "configuration": {
+      "title": "Vue Markdown Preview",
+      "properties": {
+        "vueMarkdownPreview.fallbackTheme": {
+          "type": "string",
+          "default": "github-dark",
+          "enum": [
+            "github-dark",
+            "github-light",
+            "dark-plus",
+            "light-plus",
+            "dracula",
+            "one-dark-pro",
+            "tokyo-night"
+          ]
+        },
+        "vueMarkdownPreview.customTheme": {
+          "type": "string",
+          "default": "",
+          "description": "Custom Shiki theme name. If valid, this overrides fallbackTheme."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "update-themes": "node scripts/updateThemes.js",
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run update-themes && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run update-themes && npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.125.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.5.39",
+    "shiki": "^4.3.1",
+    "vue": "^3.5.39"
+  }
+}
