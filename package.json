@@ -3,7 +3,7 @@
   "displayName": "Vue block-code renderer for VScode default Markdown Previewer",
   "description": "An extension for rendering Vue code block in Markdown default Previewer of VScode",
   "version": "0.0.1",
-  "icon": "./src/assets/icon.png",
+  "icon": "./assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/yourname/vscode-mdpreview-vue-renderer"
