@@ -6,6 +6,8 @@ This extension fits the default Markdown Previewer in VScode, enhancing the high
 
 The core function of this extension is implemented via Shiki. Hence the display theme of the Vue block code in preview mode needs to be configurated seperatedly. An entrance to modify its theme is featured and can be accessed in the extension's settings interface. You can choose various themes supported by Shiki.
 
+It is now available at VScode Marketplace. Please feel free to download and try it!
+
 ## Requirements
 
 This extension is developed and released on `Version 1.128` of VScode, following the extension development instructions of VScode. You may refer to:
@@ -22,7 +24,7 @@ Any tech supports for further releases of VScode on this extension are not guara
 
 ## Release Notes
 
-### 0.0.1
+### 0.0.2
 
 ## For more information
 

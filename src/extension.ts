@@ -5,7 +5,6 @@ const SUPPORTED_THEMES =
 	themes as string[];
 
 function resolveTheme() {
-
 	const config =
 		vscode.workspace.getConfiguration(
 			"vueMarkdownPreview"
@@ -37,23 +36,31 @@ function resolveTheme() {
 	return fallbackTheme;
 }
 
+function detectVueCodeLanguage(
+	code: string
+): "vue" | "ts" {
+	const vueSfcPattern =
+		/<(template|script|style)\b/i;
+
+	return vueSfcPattern.test(code)
+		? "vue"
+		: "ts";
+}
+
 export async function activate(
 	context: vscode.ExtensionContext
 ) {
-
 	const { createHighlighter } =
 		await import("shiki");
 
 	const highlighter =
 		await createHighlighter({
 			themes: SUPPORTED_THEMES,
-			langs: ["vue"]
+			langs: ["vue", "ts"]
 		});
 
 	return {
-
 		extendMarkdownIt(md: any) {
-
 			const defaultFence =
 				md.renderer.rules.fence;
 
@@ -64,7 +71,6 @@ export async function activate(
 				env,
 				self
 			) => {
-
 				const token =
 					tokens[idx];
 
@@ -76,28 +82,30 @@ export async function activate(
 				if (
 					language === "vue"
 				) {
+					const detectedLang =
+						detectVueCodeLanguage(
+							token.content
+						);
 
 					try {
-
 						return highlighter.codeToHtml(
 							token.content,
 							{
-								lang: "vue",
-								theme: resolveTheme()
+								lang: detectedLang,
+								theme:
+									resolveTheme()
 							}
 						);
-
 					}
 					catch {
-
 						return highlighter.codeToHtml(
 							token.content,
 							{
-								lang: "vue",
-								theme: "github-dark"
+								lang: detectedLang,
+								theme:
+									"github-dark"
 							}
 						);
-
 					}
 				}
 
